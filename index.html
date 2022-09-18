@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number To Words</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 100px);
+            flex-direction: column;
+        }
+        .number{
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 80%;
+            height: 50px;
+            padding: 0 20px;
+            font-size: 25px;
+        }
+        .output{
+            padding: 10px 30px;
+            min-height: 50px;
+            margin: 50px 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 25px;
+            width: 80%;
+        }
+        .heading{
+            background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 60px;
+            line-height: 60px;
+            margin: 50px 0;
+            text-align: center;
+        }
+        .speech{
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .speech:hover{
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Number To Text</h1>
+        <input type="text" class="number" placeholder="Enter a Number" id="number" value="" onkeyup="convert()">
+        <div class="output" id="output">Result</div>
+        <button class="speech" id="speech" onclick="read_number()"><span class="mic_icon">&#127908;</span></button>
+    </div>
+    
+    <script src="numberToWords.js"></script>
+    
+    <script>
+            
+        let output_element = document.getElementById('output')
+        let number_element = document.getElementById('number')
+
+        document.querySelector("input").addEventListener("keypress", function (evt) {
+                if (evt.which < 48 || evt.which > 57)
+                {
+                    evt.preventDefault();
+                }
+        });
+
+        document.querySelector("input").addEventListener("keydown", function (evt) {
+
+                var key = evt.keyCode || evt.charCode;
+                if( key == 8 || key == 46 ){
+                    if((evt.target.value).length <= 1){
+                        output_element.innerHTML = "Result"
+                    }
+                }
+                if(key == 32){
+                    return false;
+                }
+            
+        });
+
+        function convert(){
+            let number = number_element.value
+            let output = numberToText.convertToText(number)
+            output_element.innerHTML = output
+            console.log(output, number)
+        }
+
+        function read_number(){
+            let speech = new SpeechSynthesisUtterance();
+
+            speech.lang = "en";
+
+            ouput = document.getElementById("output");
+
+            if(output.innerHTML === "Result"){
+                speech.text = "Please enter a number "
+            }else{
+                speech.text = document.querySelector("#output").innerHTML;
+            }
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
