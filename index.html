@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+
     <style>
         *{
             margin: 0;
@@ -45,7 +46,7 @@
         }
         .output{
             padding: 10px 30px;
-            min-height: 50px;
+            min-height: auto;
             margin: 50px 10px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 16px;
@@ -55,7 +56,6 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             font-size: 25px;
             width: 80%;
-            text-align: center;
         }
         .heading{
             background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet);
@@ -79,13 +79,18 @@
         .speech:hover{
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
+        .notation{
+            position: relative;
+            top: -30px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="heading">Number To Words</h1>
-        <input type="text" class="number" placeholder="Enter a number" id="number" value="" onkeyup="convert()">
+        <h1 class="heading">Number To Text</h1>
+        <input type="text" class="number" placeholder="Enter a Number" id="number" value="" onkeyup="convert()">
         <div class="output" id="output">Result</div>
+        <small class="notation">Double click to copy</small>
         <button class="speech" id="speech" onclick="read_number()"><span class="mic_icon">&#127908;</span></button>
     </div>
     
@@ -114,14 +119,12 @@
                 if(key == 32){
                     return false;
                 }
-            
         });
 
         function convert(){
             let number = number_element.value
             let output = numberToText.convertToText(number)
             output_element.innerHTML = output
-            console.log(output, number)
         }
 
         function read_number(){
@@ -138,6 +141,19 @@
             }
             window.speechSynthesis.speak(speech);
         }
+
+        const span = document.getElementById('output')
+
+        span.onclick = function() {
+            document.execCommand("copy");
+        }
+
+        span.addEventListener("copy", function(event) {
+            event.preventDefault();
+            if (event.clipboardData) {
+                event.clipboardData.setData("text/plain", span.textContent);
+            }
+        });
     </script>
 </body>
 </html>
