@@ -107,6 +107,8 @@
                 if (evt.which < 48 || evt.which > 57)
                 {
                     evt.preventDefault();
+                }else{
+                    notation.innerHTML = 'Double click to copy!'
                 }
         });
 
@@ -152,7 +154,8 @@
 
         const span = document.getElementById('output')
 
-        span.onclick = function() {
+        span.ondblclick = function() {
+            notation.innerHTML = 'Copied!'
             document.execCommand("copy");
         }
 
