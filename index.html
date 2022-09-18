@@ -79,7 +79,8 @@
         .speech:hover{
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
-        .notation{
+        #notation{
+            display: none;
             position: relative;
             top: -30px;
         }
@@ -90,7 +91,7 @@
         <h1 class="heading">Number To Text</h1>
         <input type="text" class="number" placeholder="Enter a Number" id="number" value="" onkeyup="convert()">
         <div class="output" id="output">Result</div>
-        <small class="notation">Double click to copy</small>
+        <small id="notation">Double click to copy</small>
         <button class="speech" id="speech" onclick="read_number()"><span class="mic_icon">&#127908;</span></button>
     </div>
     
@@ -100,6 +101,7 @@
             
         let output_element = document.getElementById('output')
         let number_element = document.getElementById('number')
+        let notation = document.getElementById('notation')
 
         document.querySelector("input").addEventListener("keypress", function (evt) {
                 if (evt.which < 48 || evt.which > 57)
@@ -109,7 +111,6 @@
         });
 
         document.querySelector("input").addEventListener("keydown", function (evt) {
-
                 var key = evt.keyCode || evt.charCode;
                 if( key == 8 || key == 46 ){
                     if((evt.target.value).length <= 1){
@@ -122,7 +123,14 @@
         });
 
         function convert(){
+            
             let number = number_element.value
+
+            if(number){
+                notation.style.display = "block"
+            }else{
+                notation.style.display = "none"
+            }
             let output = numberToText.convertToText(number)
             output_element.innerHTML = output
         }
